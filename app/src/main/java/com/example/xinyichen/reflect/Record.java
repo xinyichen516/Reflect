@@ -64,11 +64,5 @@ public class Record extends AppCompatActivity {
 
         new Thread(r).start();
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Uri photoUri = Uri.fromFile(getOutputPhotoFile());
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
-        startActivityForResult(intent, CAMERA_PHOTO_REQUEST_CODE);
-
     }
 }
