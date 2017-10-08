@@ -1,12 +1,27 @@
 package com.example.xinyichen.reflect;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.androidhiddencamera.CameraConfig;
+import com.androidhiddencamera.CameraError;
+import com.androidhiddencamera.HiddenCameraActivity;
+import com.androidhiddencamera.config.CameraFacing;
+import com.androidhiddencamera.config.CameraImageFormat;
+import com.androidhiddencamera.config.CameraResolution;
+import com.androidhiddencamera.config.CameraRotation;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
@@ -17,22 +32,89 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.client.utils.URIBuilder;
+
+import java.io.File;
 import java.net.URI;
 
 
 
-public class Record extends AppCompatActivity {
+public class Record extends HiddenCameraActivity {
 
+
+    private CameraConfig mCameraConfig;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        dispatchTakeVideoIntent();
+        setUpCamera();
+
+        //Take a picture
+        findViewById(R.id.recordButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Take picture using the camera without preview.
+                takePicture();
+            }
+        });
+
+
+        //dispatchTakeVideoIntent();
 
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 101) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //noinspection MissingPermission
+                startCamera(mCameraConfig);
+            } else {
+                Toast.makeText(this, "Camera permission denied.", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onImageCapture(@NonNull File imageFile) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+
+        analyzeFrame(bitmap);
+    }
+
+    @Override
+    public void onCameraError(@CameraError.CameraErrorCodes int errorCode) {
+        switch (errorCode) {
+            case CameraError.ERROR_CAMERA_OPEN_FAILED:
+                //Camera open failed. Probably because another application
+                //is using the camera
+                Toast.makeText(this, "Cannot open camera.", Toast.LENGTH_LONG).show();
+                break;
+            case CameraError.ERROR_IMAGE_WRITE_FAILED:
+                //Image write failed. Please check if you have provided WRITE_EXTERNAL_STORAGE permission
+                Toast.makeText(this, "Cannot write image captured by camera.", Toast.LENGTH_LONG).show();
+                break;
+            case CameraError.ERROR_CAMERA_PERMISSION_NOT_AVAILABLE:
+                //camera permission is not available
+                //Ask for the camra permission before initializing it.
+                Toast.makeText(this, "Camera permission not available.", Toast.LENGTH_LONG).show();
+                break;
+            case CameraError.ERROR_DOES_NOT_HAVE_OVERDRAW_PERMISSION:
+                //This error will never happen while hidden camera is used from activity or fragment
+                break;
+            case CameraError.ERROR_DOES_NOT_HAVE_FRONT_CAMERA:
+                Toast.makeText(this, "Your device does not have front camera.", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
 
@@ -112,5 +194,28 @@ public class Record extends AppCompatActivity {
 
             new Thread(r).start();
         }
+
+        public void setUpCamera() {
+            //Setting camera configuration
+            mCameraConfig = new CameraConfig()
+                    .getBuilder(this)
+                    .setCameraFacing(CameraFacing.FRONT_FACING_CAMERA)
+                    .setCameraResolution(CameraResolution.HIGH_RESOLUTION)
+                    .setImageFormat(CameraImageFormat.FORMAT_JPEG)
+                    .setImageRotation(CameraRotation.ROTATION_270)
+                    .build();
+
+
+            //Check for the camera permission for the runtime
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+
+                //Start camera preview
+                startCamera(mCameraConfig);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 101);
+            }
+        }
+
+
     }
 
