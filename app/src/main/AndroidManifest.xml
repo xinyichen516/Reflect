@@ -11,15 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".LoginActivity">
+=======
+        <activity android:name=".Record">
+>>>>>>> 6243c9cc3597c5a98de2c057d1edf9da6bde797b
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".MainActivity" />
         <activity android:name=".FeedActivity"></activity>
+=======
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".FeedActivity" />
+        <activity android:name=".MainActivity"></activity>
+>>>>>>> 6243c9cc3597c5a98de2c057d1edf9da6bde797b
     </application>
 
 </manifest>
