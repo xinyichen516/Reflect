@@ -1,7 +1,9 @@
 package com.example.xinyichen.reflect;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -14,4 +16,5 @@ public class Utils {
     // purpose: to have clean code
     static DatabaseReference dRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://calhacks2017-62707.firebaseio.com/");
     static StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://calhacks2017-62707.appspot.com");
+    static Query query = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 }

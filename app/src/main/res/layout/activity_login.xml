@@ -17,7 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/placeholder" />
+        app:srcCompat="re@drawable/placeholder" />
 
     <TextView
         android:id="@+id/textView"
