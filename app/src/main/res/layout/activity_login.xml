@@ -5,19 +5,19 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorJames"
     tools:context="com.example.xinyichen.reflect.LoginActivity">
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="250dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="279dp"
+        android:layout_height="156dp"
+        android:layout_marginTop="31dp"
         android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/placeholder" />
+        app:srcCompat="@drawable/reflect_icon_3" />
 
     <TextView
         android:id="@+id/textView"
@@ -30,7 +30,7 @@
         android:layout_marginTop="24dp"
         android:text="@string/hello_there_please_sign_in"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,16 +43,16 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginRight="16dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@android:color/white"
+        android:backgroundTint="@android:color/black"
         android:ems="10"
         android:hint="@string/emailHint"
         android:inputType="textEmailAddress"
-        android:textColor="@android:color/white"
-        android:textColorHighlight="@android:color/white"
-        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/black"
+        android:textColorHighlight="@android:color/black"
+        android:textColorHint="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -64,12 +64,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@android:color/white"
+        android:backgroundTint="@android:color/black"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/black"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/emailView"
         app:layout_constraintRight_toRightOf="@+id/emailView"
@@ -80,24 +80,24 @@
         android:layout_width="120dp"
         android:layout_height="56dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:text="@string/log_in"
         app:layout_constraintRight_toRightOf="@+id/passwordView"
         app:layout_constraintTop_toBottomOf="@+id/passwordView"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_marginRight="16dp" />
 
     <Button
         android:id="@+id/signupButton"
         android:layout_width="120dp"
         android:layout_height="56dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:text="@string/sign_up"
         app:layout_constraintLeft_toLeftOf="@+id/passwordView"
         app:layout_constraintTop_toBottomOf="@+id/passwordView"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_marginLeft="16dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
