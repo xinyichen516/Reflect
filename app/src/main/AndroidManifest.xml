@@ -30,8 +30,8 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".FeedActivity" />
-        <activity android:name=".MainActivity"></activity>
-
+        <activity android:name=".MainActivity" />
+        <activity android:name=".DataDetails"></activity>
     </application>
 
 </manifest>
