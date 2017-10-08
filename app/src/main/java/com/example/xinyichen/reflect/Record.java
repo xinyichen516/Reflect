@@ -61,8 +61,7 @@ public class Record extends AppCompatActivity {
                 public void run() {
                     HttpClient httpClient = new DefaultHttpClient();
 
-                    try
-                    {
+                    try {
                         // NOTE: You must use the same region in your REST call as you used to obtain your subscription keys.
                         //   For example, if you obtained your subscription keys from westcentralus, replace "westus" in the
                         //   URL below with "westcentralus".
@@ -79,21 +78,16 @@ public class Record extends AppCompatActivity {
                         HttpResponse response = httpClient.execute(request);
                         HttpEntity entity = response.getEntity();
 
-                        if (entity != null)
-                        {
+                        if (entity != null) {
                             System.out.println(EntityUtils.toString(entity));
                         }
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
             };
 
             new Thread(r).start();
-
-
         }
     }
 

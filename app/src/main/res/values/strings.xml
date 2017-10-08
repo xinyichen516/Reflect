@@ -5,4 +5,6 @@
     <string name="password">Password</string>
     <string name="sign_up">Sign Up</string>
     <string name="emailHint">Email</string>
+    <string name="dateTitle">How I\'m Feeling on %1$s</string>
+    <string name="textview">TextView</string>
 </resources>
