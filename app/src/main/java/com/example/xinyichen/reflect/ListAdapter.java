@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.storage.StorageReference;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 
 import java.util.ArrayList;
 
@@ -37,17 +39,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
     @Override
     public void onBindViewHolder(final CustomViewHolder holder, int position) {
         final DaysData m = data.get(position);
-        holder.title.setText(m.title);
-        holder.date.setText(m.date);
-        holder.numInterest.setText(context.getResources().getString(R.string.pplInt, m.numInterested + ""));
-        holder.email.setText(m.hostEmail);
+        holder.dateView.setText(m.date);
+        holder.sentiment.setText(m.date);
 
         StorageReference pathReference = Utils.storageReference.child("/" + m.key + ".png");
 
         Glide.with(context)
                 .using(new FirebaseImageLoader())
                 .load(pathReference)
-                .into(holder.eventImg);
+                .into(holder.pieImg);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

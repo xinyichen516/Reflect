@@ -3,13 +3,13 @@
     package="com.example.xinyichen.reflect">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+        android:name="android.hardware.camera.any"
+        android:required="true" />
     <uses-feature
-        android:name="android.hardware.camera.front"
+        android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
     <application
