@@ -11,6 +11,8 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +31,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".FeedActivity" />
         <activity android:name=".MainActivity"></activity>
+
     </application>
 
 </manifest>
