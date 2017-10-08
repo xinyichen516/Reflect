@@ -2,11 +2,11 @@ package com.example.xinyichen.reflect;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
@@ -17,43 +17,67 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.client.utils.URIBuilder;
-
 import java.net.URI;
 
-import org.apache.http.entity.mime.content.*;
 
 
 public class Record extends AppCompatActivity {
 
 
-    byte[] imageArray;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        dispatchTakePictureIntent();
+        dispatchTakeVideoIntent();
+
 
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    static final int REQUEST_VIDEO_CAPTURE = 1;
+
+    private void dispatchTakeVideoIntent() {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            final Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            imageArray = stream.toByteArray();
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+            Uri videoUri = intent.getData();
 
+
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(this,videoUri);
+
+            Bitmap bitmap = retriever.getFrameAtTime(1000000);
+            Bitmap bitmap2 = retriever.getFrameAtTime(2000000);
+
+
+
+
+
+            analyzeFrame(bitmap);
+            analyzeFrame(bitmap2);
+
+        }
+    }
+
+
+
+
+
+    byte[] imageArray;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
+    protected void analyzeFrame(Bitmap img)
+    {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            img.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            imageArray = stream.toByteArray();
 
             Runnable r = new Runnable() {
                 @Override
@@ -90,4 +114,3 @@ public class Record extends AppCompatActivity {
         }
     }
 
-}
