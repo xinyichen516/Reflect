@@ -24,13 +24,14 @@ public class DaysData implements Serializable{
     double sadness;
     double surprise;
     double sentiment;
+    String userEmail;
 
 
     DaysData() {}
 
     DaysData(String firebaseImageURL, String key, String transcription, double anger, double contempt,
              double disgust, double fear, double happiness, double neutral, double sadness,
-             double surprise, double sentiment) {
+             double surprise, double sentiment, String userEmail) {
         this.firebaseImageURL = firebaseImageURL;
         this.key = key;
         this.transcription = transcription;
@@ -46,6 +47,15 @@ public class DaysData implements Serializable{
         Calendar currDate = new GregorianCalendar();
         this.date = currDate.YEAR + "/" + currDate.MONTH + "/" + currDate.DAY_OF_MONTH;
         this.sentiment = sentiment;
+        this.userEmail = userEmail;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getDate() {

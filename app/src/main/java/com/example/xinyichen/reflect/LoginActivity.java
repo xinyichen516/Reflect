@@ -1,5 +1,4 @@
 package com.example.xinyichen.reflect;
-
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -53,14 +52,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void attemptLogin() {
         String email = ((EditText) findViewById(R.id.emailView)).getText().toString();
-        String password = ((EditText) findViewById(R.id.emailView)).getText().toString();
+        String password = ((EditText) findViewById(R.id.passwordView)).getText().toString();
         if (!email.equals("") && !password.equals("")) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d("SignInWithEmail", "signInWithEmail:onComplete:" + task.isSuccessful());
-
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
@@ -74,6 +72,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     });
         }
+        else {
+            Toast.makeText(LoginActivity.this, "One of two entries incomplete", Toast.LENGTH_SHORT).show();
+         }
+        //    else if (email.equals("") && !password.equals("")) {
+        //      Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+
     }
 
     private void attemptSignup() {
@@ -92,22 +96,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Auth Failed",
+                                Toast.makeText(LoginActivity.this, "Already existing user",
                                         Toast.LENGTH_SHORT).show();
-                            }
-
-                            else {
+                            } else {
                                 startActivity(new Intent(LoginActivity.this, FeedActivity.class));
                             }
                         }
                     });
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
     @Override
     public void onStop() {
         super.onStop();

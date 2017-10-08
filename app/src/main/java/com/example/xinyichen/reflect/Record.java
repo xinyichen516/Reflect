@@ -64,7 +64,7 @@ public class Record extends HiddenCameraActivity {
 
 
     }
-
+    
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 101) {
@@ -77,6 +77,7 @@ public class Record extends HiddenCameraActivity {
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
     }
 
     @Override
