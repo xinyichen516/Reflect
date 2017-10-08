@@ -31,6 +31,8 @@ public class Record extends AppCompatActivity {
 
         dispatchTakeVideoIntent();
 
+        
+
 
     }
 
